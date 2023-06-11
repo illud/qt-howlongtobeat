@@ -1,1 +1,1 @@
-# qt-howlongtobeat
+# qt-howlongtobeat![HowLongTobeat](./inAppImg/app.png)

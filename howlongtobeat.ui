@@ -74,9 +74,9 @@ QPushButton#searchBtn::focus:pressed{
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>60</y>
+      <y>70</y>
       <width>961</width>
-      <height>561</height>
+      <height>551</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -109,7 +109,7 @@ QTableWidget::item {
  QScrollBar:vertical {
 	border: none;
     background: transparent;
-    width: 15px;
+    width: 12px;
     margin: 15px 0 15px 2px;
 	border-radius: 0px;
     margin-right: 4px;
@@ -201,8 +201,14 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
 {
 }</string>
     </property>
+    <attribute name="horizontalHeaderMinimumSectionSize">
+     <number>35</number>
+    </attribute>
     <attribute name="verticalHeaderVisible">
      <bool>false</bool>
+    </attribute>
+    <attribute name="verticalHeaderDefaultSectionSize">
+     <number>30</number>
     </attribute>
     <column>
      <property name="text">
@@ -229,6 +235,23 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
       <string>COMPLETIONIST</string>
      </property>
     </column>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>50</y>
+      <width>241</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 8pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Hours data obtained from HowLongToBeat.</string>
+    </property>
    </widget>
   </widget>
  </widget>
