@@ -13,6 +13,7 @@ HowLongTobeat::HowLongTobeat(QWidget *parent)
     , ui(new Ui::HowLongTobeat)
 {
     ui->setupUi(this);
+    ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
 }
 
 HowLongTobeat::~HowLongTobeat()

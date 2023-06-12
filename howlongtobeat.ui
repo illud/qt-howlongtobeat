@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1029</width>
-    <height>635</height>
+    <height>647</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,34 +17,25 @@
    <string notr="true">background-color: rgb(52, 52, 52);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLineEdit" name="lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>20</y>
-      <width>381</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-style: solid;
+   <layout class="QVBoxLayout" name="verticalLayout_4">
+    <item>
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="styleSheet">
+       <string notr="true">border-style: solid;
 font: 900 9pt &quot;Arial Black&quot;;
 color: rgb(255, 255, 255);
 border-bottom-width: 1px;
 border-color: none none gray none;</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="searchBtn">
-    <property name="geometry">
-     <rect>
-      <x>430</x>
-      <y>20</y>
-      <width>80</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton#searchBtn { 
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="searchBtn">
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton#searchBtn { 
     background-color: rgb(41, 98, 255);
 	font: 900 9pt &quot;Arial Black&quot;;
 	color: rgb(255, 255, 255);
@@ -65,22 +56,27 @@ QPushButton#searchBtn::focus:pressed{
     border: 0px;
 }
 </string>
-    </property>
-    <property name="text">
-     <string>Search</string>
-    </property>
-   </widget>
-   <widget class="QTableWidget" name="tableWidget">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>70</y>
-      <width>961</width>
-      <height>551</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"> QTableWidget {
+      </property>
+      <property name="text">
+       <string>Search</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="styleSheet">
+       <string notr="true">font: 8pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Hours data obtained from HowLongToBeat.</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTableWidget" name="tableWidget">
+      <property name="styleSheet">
+       <string notr="true"> QTableWidget {
         color: #ffffff;
         border-radius: 10px;
     }
@@ -200,59 +196,47 @@ QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal
 QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
 {
 }</string>
-    </property>
-    <attribute name="horizontalHeaderMinimumSectionSize">
-     <number>35</number>
-    </attribute>
-    <attribute name="verticalHeaderVisible">
-     <bool>false</bool>
-    </attribute>
-    <attribute name="verticalHeaderDefaultSectionSize">
-     <number>30</number>
-    </attribute>
-    <column>
-     <property name="text">
-      <string>IMAGE</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>TITLE</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>MAIN</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>EXTRA</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>COMPLETIONIST</string>
-     </property>
-    </column>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>50</y>
-      <width>241</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 8pt &quot;Segoe UI&quot;;
-color: rgb(255, 255, 255);</string>
-    </property>
-    <property name="text">
-     <string>Hours data obtained from HowLongToBeat.</string>
-    </property>
-   </widget>
+      </property>
+      <attribute name="horizontalHeaderMinimumSectionSize">
+       <number>35</number>
+      </attribute>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>190</number>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderDefaultSectionSize">
+       <number>30</number>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>IMAGE</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>TITLE</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>MAIN</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>EXTRA</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>COMPLETIONIST</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
