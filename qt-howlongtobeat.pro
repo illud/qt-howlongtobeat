@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -20,6 +20,7 @@ LIBS+=C:\Qt\6.5.1\mingw_64\lib\libcurl.dll.a
 INCLUDEPATH += C:\Qt\6.5.1\mingw_64\include
 
 HEADERS += \
+    ImageUtil.h \
     howlongtobeat.h
 
 FORMS += \

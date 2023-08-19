@@ -1,12 +1,14 @@
 
 #include "howlongtobeat.h"
 #include "ui_howlongtobeat.h"
+#include <charconv>
 #include <curl/curl.h>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QVector>
 #include <sstream>
+#include "ImageUtil.h"
 
 HowLongTobeat::HowLongTobeat(QWidget *parent)
     : QMainWindow(parent)
@@ -60,14 +62,21 @@ size_t WriteCallback(char *contents, size_t size, size_t nmemb, void *userp)
 
 void HowLongTobeat::on_searchBtn_clicked()
 {
-    //QVector<QString> splitWords = RemoveDupWord(ui->lineEdit->text().toStdString());
-    //qDebug() << splitWords;
+    QVector<QString> splitWords = RemoveDupWord(ui->lineEdit->text().toStdString());
+
+
+    std::string searchTerm;
+    for (int i = 0; i < splitWords.count(); ++i) {
+        searchTerm += "," + splitWords[i].toStdString();
+    }
+    searchTerm.erase(0, 1);
+    //qDebug() << "[" + searchTerm + "]";
 
     CURL *curl;
     CURLcode res;
-    struct curl_slist *header;
+    struct curl_slist *header; //ui->lineEdit->text().toStdString()
     std::string readBuffer;
-    std::string jsonstr = "{\"searchType\":\"games\",\"searchTerms\":[\""+ui->lineEdit->text().toStdString()+"\"],\"searchPage\":1,\"size\":20,\"searchOptions\":{\"games\":{\"userId\":279067,\"platform\":\"\",\"sortCategory\":\"popular\",\"rangeCategory\":\"main\",\"rangeTime\":{\"min\":null,\"max\":null},\"gameplay\":{\"perspective\":\"\",\"flow\":\"\",\"genre\":\"\"},\"rangeYear\":{\"min\":\"\",\"max\":\"\"},\"modifier\":\"\"},\"users\":{\"sortCategory\":\"postcount\"},\"lists\":{\"sortCategory\":\"follows\"},\"filter\":\"\",\"sort\":0,\"randomizer\":0}}";
+    std::string jsonstr = "{\"searchType\":\"games\",\"searchTerms\":[\""+ ui->lineEdit->text().toStdString() +"\"],\"searchPage\":1,\"size\":20,\"searchOptions\":{\"games\":{\"userId\":279067,\"platform\":\"\",\"sortCategory\":\"popular\",\"rangeCategory\":\"main\",\"rangeTime\":{\"min\":null,\"max\":null},\"gameplay\":{\"perspective\":\"\",\"flow\":\"\",\"genre\":\"\"},\"rangeYear\":{\"min\":\"\",\"max\":\"\"},\"modifier\":\"\"},\"users\":{\"sortCategory\":\"postcount\"},\"lists\":{\"sortCategory\":\"follows\"},\"filter\":\"\",\"sort\":0,\"randomizer\":0}}";
 
     /* In windows, this will init the winsock stuff */
     curl_global_init(CURL_GLOBAL_ALL);
@@ -119,9 +128,36 @@ void HowLongTobeat::on_searchBtn_clicked()
 
     //Sets tableWidget row count
     ui->tableWidget->setRowCount(jsonArray.count());
+
+    // Sets icon size
+    ui->tableWidget->setIconSize(QSize(300, 300));
+
     int currentRow = 0;
     for (int var = 0; var < jsonArray.count(); ++var) {
-        ui->tableWidget->setItem(currentRow, 0, new QTableWidgetItem("https://howlongtobeat.com/games/" + jsonArray[var].toObject()["game_image"].toString()));
+        // Set the row height for a specific row
+        ui->tableWidget->setRowHeight(var, 300);
+
+        // Download image from url and set image as icon
+        ImageUtil* imageUtil = new ImageUtil();
+        imageUtil->loadFromUrl(QUrl("https://howlongtobeat.com/games/" + jsonArray[var].toObject()["game_image"].toString()));
+        imageUtil->connect(imageUtil, &ImageUtil::loaded,
+                           [=]() {
+                               QImage image = imageUtil->image(); // Get the image from ImageUtil
+
+                               // Convert QImage to QPixmap for display
+                               QPixmap pixmap = QPixmap::fromImage(image);
+
+                               // Create a QTableWidgetItem and set the image as its icon
+                               QTableWidgetItem *imageItem = new QTableWidgetItem();
+
+                               // Sets icon
+                               imageItem->setIcon(QIcon(pixmap));
+
+                               // Set the item in the table widget
+                               ui->tableWidget->setItem(currentRow, 0, imageItem);
+                           });
+
+       // ui->tableWidget->setItem(currentRow, 0, new QTableWidgetItem("https://howlongtobeat.com/games/" + jsonArray[var].toObject()["game_image"].toString()));
         ui->tableWidget->setItem(currentRow, 1, new QTableWidgetItem(jsonArray[var].toObject()["game_name"].toString()));
         ui->tableWidget->setItem(currentRow, 2, new QTableWidgetItem(secondsToTime(jsonArray[var].toObject()["comp_main"].toInt())));
         ui->tableWidget->setItem(currentRow, 3, new QTableWidgetItem(secondsToTime(jsonArray[var].toObject()["comp_plus"].toInt())));

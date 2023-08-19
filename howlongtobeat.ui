@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1029</width>
+    <width>1087</width>
     <height>647</height>
    </rect>
   </property>
@@ -201,7 +201,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
        <number>35</number>
       </attribute>
       <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>190</number>
+       <number>210</number>
       </attribute>
       <attribute name="verticalHeaderVisible">
        <bool>false</bool>
