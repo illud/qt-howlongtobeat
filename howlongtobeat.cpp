@@ -16,6 +16,9 @@ HowLongTobeat::HowLongTobeat(QWidget *parent)
 {
     ui->setupUi(this);
     ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
+
+    // Fetch api at the start of the app
+    HowLongTobeat::on_searchBtn_clicked();
 }
 
 HowLongTobeat::~HowLongTobeat()
@@ -64,19 +67,28 @@ void HowLongTobeat::on_searchBtn_clicked()
 {
     QVector<QString> splitWords = RemoveDupWord(ui->lineEdit->text().toStdString());
 
+    // build a string by sequentially adding data to it.
+    std::stringstream ss;
 
-    std::string searchTerm;
-    for (int i = 0; i < splitWords.count(); ++i) {
-        searchTerm += "," + splitWords[i].toStdString();
+    for (int i = 0; i < splitWords.size(); ++i) {
+        if (i > 0) {
+            ss << ", ";
+        }
+        ss << "\"" << splitWords[i].toStdString() << "\""; // Include the " symbols around each element
     }
-    searchTerm.erase(0, 1);
-    //qDebug() << "[" + searchTerm + "]";
 
+    std::string searchTerms = ss.str();
+
+    //qDebug() << searchTerms;
+
+    //qDebug() << splitWords.data()->toStdString();
+    //ui->lineEdit->text().toStdString()
     CURL *curl;
     CURLcode res;
-    struct curl_slist *header; //ui->lineEdit->text().toStdString()
+    struct curl_slist *header;
     std::string readBuffer;
-    std::string jsonstr = "{\"searchType\":\"games\",\"searchTerms\":[\""+ ui->lineEdit->text().toStdString() +"\"],\"searchPage\":1,\"size\":20,\"searchOptions\":{\"games\":{\"userId\":279067,\"platform\":\"\",\"sortCategory\":\"popular\",\"rangeCategory\":\"main\",\"rangeTime\":{\"min\":null,\"max\":null},\"gameplay\":{\"perspective\":\"\",\"flow\":\"\",\"genre\":\"\"},\"rangeYear\":{\"min\":\"\",\"max\":\"\"},\"modifier\":\"\"},\"users\":{\"sortCategory\":\"postcount\"},\"lists\":{\"sortCategory\":\"follows\"},\"filter\":\"\",\"sort\":0,\"randomizer\":0}}";
+    std::string jsonstr =  "{\"searchType\": \"games\",\"searchTerms\": ["+searchTerms+"],\"searchPage\": 1,\"size\": 20,\"searchOptions\": { \"games\": {\"userId\": 0,\"platform\": \"\",\"sortCategory\": \"popular\",\"rangeCategory\": \"main\",\"rangeTime\": { \"min\": 0, \"max\": 0},\"gameplay\": { \"perspective\": \"\", \"flow\": \"\", \"genre\": \"\"},\"modifier\": \"\" }, \"users\": {\"sortCategory\": \"postcount\" }, \"filter\": \"\", \"sort\": 0, \"randomizer\": 0} }";
+    //qDebug() << jsonstr;
 
     /* In windows, this will init the winsock stuff */
     curl_global_init(CURL_GLOBAL_ALL);
